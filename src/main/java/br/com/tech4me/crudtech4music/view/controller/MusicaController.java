@@ -34,32 +34,32 @@ public class MusicaController {
 
     @GetMapping
     public ResponseEntity<List<MusicaResponse>> obterTodos() {
-        List<MusicaDto> proddto = servico.obterTodos();
-        List<MusicaResponse> prodresponse = 
-        proddto.
+        List<MusicaDto> musdto = servico.obterTodos();
+        List<MusicaResponse> musresponse = 
+        musdto.
         stream().
         map(p -> mapper.map(p, MusicaResponse.class)).
         collect(Collectors.toList());
 
-        return new ResponseEntity<>(prodresponse, HttpStatus.OK);
+        return new ResponseEntity<>(musresponse, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<MusicaResponse> criarMusica(@RequestBody @Valid MusicaRequest prodrequest) {
-        MusicaDto dtorequest = mapper.map(prodrequest, MusicaDto.class);
+    public ResponseEntity<MusicaResponse> criarMusica(@RequestBody @Valid MusicaRequest musrequest) {
+        MusicaDto dtorequest = mapper.map(musrequest, MusicaDto.class);
         MusicaDto dtoresponse = servico.criarMusica(dtorequest);
-        MusicaResponse prodresponse = mapper.map(dtoresponse, MusicaResponse.class);
+        MusicaResponse musresponse = mapper.map(dtoresponse, MusicaResponse.class);
 
-        return new ResponseEntity<>(prodresponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(musresponse, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<MusicaResponse> obterPorId(@PathVariable String id) {
-        Optional<MusicaDto> proddto = servico.obterMusicaPorId(id);
+        Optional<MusicaDto> musdto = servico.obterMusicaPorId(id);
 
-        if(proddto.isPresent()) {
-            MusicaResponse prodresponse = mapper.map(proddto.get(), MusicaResponse.class);
-            return new ResponseEntity<>(prodresponse, HttpStatus.FOUND);    
+        if(musdto.isPresent()) {
+            MusicaResponse musresponse = mapper.map(musdto.get(), MusicaResponse.class);
+            return new ResponseEntity<>(musresponse, HttpStatus.FOUND);    
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

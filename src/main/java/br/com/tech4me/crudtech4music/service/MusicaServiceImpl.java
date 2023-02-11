@@ -22,9 +22,9 @@ public class MusicaServiceImpl implements MusicaService {
     ModelMapper mapper = new ModelMapper();
 
     @Override
-    public MusicaDto criarMusica(MusicaDto proddto) {
+    public MusicaDto criarMusica(MusicaDto musdto) {
 
-        Musica p = mapper.map(proddto, Musica.class);
+        Musica p = mapper.map(musdto, Musica.class);
         p = repositorio.save(p);
         MusicaDto dto = mapper.map(p, MusicaDto.class);
 
@@ -33,23 +33,23 @@ public class MusicaServiceImpl implements MusicaService {
 
     @Override
     public List<MusicaDto> obterTodos() {
-        List<Musica> prod = repositorio.findAll();
-        List<MusicaDto> proddto = 
-        prod.
+        List<Musica> mus = repositorio.findAll();
+        List<MusicaDto> musdto = 
+        mus.
         stream().
         map(p -> mapper.map(p, MusicaDto.class)).
         collect(Collectors.toList());
 
-        return proddto;
+        return musdto;
     }
 
     @Override
     public Optional <MusicaDto> obterMusicaPorId(String id) {
-        Optional<Musica> optprod = repositorio.findById(id);
+        Optional<Musica> optmus = repositorio.findById(id);
 
-        if (optprod.isPresent()) {
-            MusicaDto proddto = mapper.map(optprod.get(), MusicaDto.class);
-            return Optional.of(proddto);
+        if (optmus.isPresent()) {
+            MusicaDto musdto = mapper.map(optmus.get(), MusicaDto.class);
+            return Optional.of(musdto);
         }
 
         return Optional.empty();
